@@ -3,6 +3,9 @@ excite_atm
 
 #Backend Developer Test – ATM Simulation
 
+#Shell Script to Build & Run
+excite_atm.sh
+
 #Environment
 JAVA_HOME="/sk/home/bea103/jdk160_05"
 export  JAVA_HOME
