@@ -1,9 +1,9 @@
 excite_atm
 ==========
 
-Backend Developer Test – ATM Simulation
+#Backend Developer Test – ATM Simulation
 
-
+#Environment
 JAVA_HOME="/sk/home/bea103/jdk160_05"
 export  JAVA_HOME
 ANT_HOME="/sk/home/bea103/modules/org.apache.ant_1.6.5"
@@ -14,4 +14,9 @@ CLASSPATH=".:./build/classes:./lib/junit-4.11.jar:./lib/hamcrest-all-1.3.jar:/sk
 export CLASSPATH
 echo "CLASSPATH:" ${CLASSPATH}
 echo "PATH:" ${PATH}
+
+#Build application
+ant 
+
+#Run application
 java com.excite.atm.main.ATMMain
