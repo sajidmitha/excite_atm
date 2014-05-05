@@ -12,6 +12,6 @@ CLASSPATH=".:./build/classes:./lib/junit-4.11.jar:./lib/hamcrest-all-1.3.jar:/sk
 export CLASSPATH
 echo "CLASSPATH:" ${CLASSPATH}
 echo "PATH:" ${PATH}
-cd build/classes
+ant
 java com.excite.atm.main.ATMMain
 #java com.excite.atm.test.AllTests
