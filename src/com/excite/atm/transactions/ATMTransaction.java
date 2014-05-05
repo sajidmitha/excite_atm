@@ -91,7 +91,7 @@ public class ATMTransaction {
 			objATMTransactionBO.setType_of_notes(noteType);
 			objATMTransactionBO.setAmt_of_notes(amtOfNotes);
 			init(objATMTransactionBO);
-			// System.out.println("Success : "+objATMTransactionBO);
+			System.out.println("Success : "+objATMTransactionBO);
 		}
 		return objATMTransactionBO;
 	}

@@ -41,9 +41,9 @@
   </fileset>
   
   <fileset id='test.classes' dir='${excite.src}'>
-    <include name='**/*Tests*.java'/>
+    <include name='**/TEST*.java'/>
   </fileset>
-
+	
   <echo>
     Application: ${app.name} ${app.version}
     Build File : ${ant.file}
@@ -78,12 +78,17 @@
   
    <target name='compile' description='Compile source files and place beside source.'>
      <javac destdir='${excite.classes}' srcdir='${excite.src}'>   
-       <classpath refid='compile.classpath'/>
-     </javac>
+		<classpath>
+            <pathelement location="lib/hamcrest-all-1.3.jar"/>
+			<pathelement location="lib/junit-4.11.jar"/>
+           	<path refid='compile.classpath'/>
+         </classpath>
+      </javac>
      <!-- Here's a simple way of debugging a path, fileset, or patternset, using its refid: -->
      <echo>Classpath: ${toString:compile.classpath}</echo>
    </target> 
   
+
    <target name='test' description='Run all JUnit tests.' depends='compile'>
      <junit haltonfailure='false'> 
      	<classpath>
@@ -97,9 +102,19 @@
      </junit>
    </target>
 
-  
+   <target name='launch' description='Build and run the program.' depends='compile'>
+     <java classname='com.excite.atm.main.ATMMain' classpathref='run.classpath' failonerror='true'>
+       <arg value="Solar System"/>
+	     <classpath>
+		   <pathelement location='${excite.classes}'/>
+		   <path refid='compile.classpath'/>
+         </classpath>
+     </java>
+   </target>
+
    <target name='jar' description='Create a jar file for distribution.' depends='compile'>
-    <jar destfile='${build}/dist/${distro-name}.jar' manifest='MANIFEST.MF' duplicate='preserve'>
+    <jar destfile='${build}/dist/${distro-name}.jar' manifest='MANIFEST.MF' duplicate='preserve' basedir = '${excite.classes}'
+			includes = "**/*.class">
       <fileset refid='files.for.jar'/>
       <!-- The static manifest.mf file is merged with additional dynamic items, specified here : -->
       <manifest>
@@ -110,9 +125,28 @@
       </manifest>
     </jar>
    </target>
-  
-<target name='all' description='Create all build artifacts.' 
-             depends='clean,compile, test, jar'>
+
+
+  <target name='javadoc' description='Generate javadoc.' >
+    <javadoc  
+      use='true' author='true'  version='true'
+      overview='overview.html'  
+      access='package' 
+      sourcepath='${excite.src}'
+      packagenames='*.*' 
+      destdir='${build}/javadoc'
+      windowtitle='${app.name} ${app.version}'
+      noqualifier='java.*:javax.*:com.sun.*'   
+      linksource='true'
+    >
+      <classpath refid='compile.classpath'/>
+      <link href='http://java.sun.com/javase/6/docs/api/'/>      
+      <header><![CDATA[<h1>${app.name} ${app.version}</h1>]]></header>
+    </javadoc>
+  </target>
+   
+  <target name='all' description='Create all build artifacts.' 
+             depends='clean,compile,jar,launch'>
     <echo>Finished creating all build artifacts.</echo>
   </target>
   
